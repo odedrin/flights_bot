@@ -7,21 +7,26 @@ function notifyUsers(msg){
 }
 
 (async () => {
-  var url = 'https://www.google.com/travel/flights/search?tfs=CBwQAhoqagwIAhIIL20vMDdxenYSCjIwMjItMTEtMTFyDAgDEggvbS8wNGpwbCgAGipqDAgDEggvbS8wNGpwbBIKMjAyMi0xMS0yNXIMCAISCC9tLzA3cXp2KABwAYIBCwj___________8BQAFAAUgBmAEB';
-//   var url = 'https://www.google.com/travel/flights/search?tfs=CBwQAhoqagwIAhIIL20vMDdxenYSCjIwMjItMTEtMDFyDAgDEggvbS8wZF96eigAGipqDAgDEggvbS8wZF96ehIKMjAyMi0xMS0wMnIMCAISCC9tLzA3cXp2KABwAYIBCwj___________8BQAFAAUgBmAEB';
+    const actualUrl = 'https://www.google.com/travel/flights/search?tfs=CBwQAhogagcIARIDVExWEgoyMDIzLTA4LTA5cgcIARIDUkhPKAAaIGoHCAESA1JITxIKMjAyMy0wOC0xM3IHCAESA1RMVigAcAGCAQsI____________AUABSAGYAQE&curr=USD';
+    const testUrlWithFlights = 'https://www.google.com/travel/flights/search?tfs=CBwQAhoqagwIAxIIL20vMDdkZmsSCjIwMjMtMDgtMDlyDAgDEggvbS8wNnk1NygAGipqDAgDEggvbS8wNnk1NxIKMjAyMy0wOC0xM3IMCAMSCC9tLzA3ZGZrKABwAYIBCwj___________8BQAFIAZgBAQ&tfu=EgIIAQ&curr=USD';
 
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(url, { waitUntil: "networkidle0" });
-  const pageData = await page.evaluate(()=>{
-      return { 
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(actualUrl, { waitUntil: "networkidle0" });
+    // await page.goto(testUrlWithFlights, { waitUntil: "networkidle0" });
+    const pageData = await page.evaluate(()=>{
+      return {
           html: document.documentElement.innerHTML
       }
-  });
+    });
 
-  const $ = cheerio.load(pageData.html);
+    const $ = cheerio.load(pageData.html);
 
-  console.log($(".pIav2d").length);
+    if ($(".pIav2d").length > 0) {
+    notifyUsers("Flights found! :)");
+    } else {
+    notifyUsers("Flights not found :(");
+    }
 
 //   var results = [];
 //   $('body').find('ul:last').each(function (_, flights_list) {
