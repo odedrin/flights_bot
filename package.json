@@ -1,0 +1,14 @@
+{
+  "name": "flight_bot",
+  "version": "1.0.0",
+  "description": "Hackathon flight bot Mirit and Oded",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo no test yet"
+  },
+  "author": "Mirit and Oded",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12"
+  }
+}
